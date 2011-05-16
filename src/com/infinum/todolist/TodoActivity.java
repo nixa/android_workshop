@@ -8,11 +8,14 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnKeyListener;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
 
 public class TodoActivity extends Activity {
 	/** Called when the activity is first created. */
@@ -29,21 +32,39 @@ public class TodoActivity extends Activity {
 				this, android.R.layout.simple_list_item_1, todoItems);
 		listView.setAdapter(todoItemsAdapter);
 
-		myEditText.setOnKeyListener(new OnKeyListener() {
+		myEditText.setOnEditorActionListener(new OnEditorActionListener() {
 
-			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				if (event.getAction() == KeyEvent.ACTION_DOWN)
-					if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
-						todoItems.add(myEditText.getText().toString());
-						todoItemsAdapter.notifyDataSetChanged();
+			public boolean onEditorAction(TextView v, int actionId,
+					KeyEvent event) {
 
-						myEditText.setText("");
+				if (actionId == EditorInfo.IME_ACTION_DONE) {
+					todoItems.add(myEditText.getText().toString());
+					todoItemsAdapter.notifyDataSetChanged();
 
-						return true;
-					}
+					myEditText.setText("");
+
+					return true;
+				}
 
 				return false;
 			}
 		});
+		
+//		myEditText.setOnKeyListener(new OnKeyListener() {
+//
+//			public boolean onKey(View v, int keyCode, KeyEvent event) {
+//				if (event.getAction() == KeyEvent.ACTION_DOWN)
+//					if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
+//						todoItems.add(myEditText.getText().toString());
+//						todoItemsAdapter.notifyDataSetChanged();
+//
+//						myEditText.setText("");
+//
+//						return true;
+//					}
+//
+//				return false;
+//			}
+//		});
 	}
 }
