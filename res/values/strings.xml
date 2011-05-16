@@ -2,4 +2,5 @@
 <resources>
     <string name="hello">Hello World, TodoActivity!</string>
     <string name="app_name">Todo List</string>
+    <string name="are_you_sure">Are you sure that you want to delete \'%1$s?\'</string>
 </resources>

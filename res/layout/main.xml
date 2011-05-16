@@ -9,7 +9,8 @@
         android:id="@+id/editText1"
         android:layout_height="wrap_content"
         android:imeOptions="actionDone"
-        android:inputType="text"></EditText>
+        android:inputType="text"
+        android:text="@string/hello"></EditText>
     <ListView
         android:id="@+id/listView1"
         android:layout_width="match_parent"

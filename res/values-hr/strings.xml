@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Dobar dan, TodoActivity!</string>
+    <string name="app_name">Todo Lista</string>
+    <string name="are_you_sure">Jeste li sigurni da želite obraisati \'%1$s\'?</string>
+</resources>
