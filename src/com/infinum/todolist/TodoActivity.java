@@ -50,6 +50,20 @@ public class TodoActivity extends Activity {
 			}
 		});
 		
+		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+
+				String text = (String) arg0.getItemAtPosition(arg2);
+				
+				Toast.makeText(TodoActivity.this, String.format("Kliknuli ste na '%s'", text), Toast.LENGTH_SHORT).show();
+				
+				return true;
+			}
+			
+		});
+
 //		myEditText.setOnKeyListener(new OnKeyListener() {
 //
 //			public boolean onKey(View v, int keyCode, KeyEvent event) {
