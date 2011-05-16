@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:imeOptions="actionDone"
         android:inputType="text"
+        style="@style/BaseText"
         android:text="@string/hello"></EditText>
     <ListView
         android:id="@+id/listView1"
