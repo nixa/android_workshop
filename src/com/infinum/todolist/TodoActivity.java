@@ -3,6 +3,10 @@ package com.infinum.todolist;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -53,32 +57,32 @@ public class TodoActivity extends Activity {
 		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
 
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-					int arg2, long arg3) {
+					final int arg2, long arg3) {
 
 				String text = (String) arg0.getItemAtPosition(arg2);
 				
-				Toast.makeText(TodoActivity.this, String.format("Kliknuli ste na '%s'", text), Toast.LENGTH_SHORT).show();
-				
+				AlertDialog.Builder dialogBuilder = new Builder(TodoActivity.this);
+				dialogBuilder.setCancelable(true);
+				dialogBuilder.setMessage(String.format("Jeste li sigurni da želite obrisati '%s'?", text));
+				dialogBuilder.setTitle("Obriši Todo stavku");
+				dialogBuilder.setPositiveButton("DA", new OnClickListener() {
+					
+					public void onClick(DialogInterface dialog, int which) {
+						todoItems.remove(arg2);
+						todoItemsAdapter.notifyDataSetChanged();
+					}
+				});
+				dialogBuilder.setNegativeButton("NE", new OnClickListener() {
+					
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.cancel();
+					}
+				});				
+				dialogBuilder.create().show();
+
 				return true;
 			}
 			
 		});
-
-//		myEditText.setOnKeyListener(new OnKeyListener() {
-//
-//			public boolean onKey(View v, int keyCode, KeyEvent event) {
-//				if (event.getAction() == KeyEvent.ACTION_DOWN)
-//					if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
-//						todoItems.add(myEditText.getText().toString());
-//						todoItemsAdapter.notifyDataSetChanged();
-//
-//						myEditText.setText("");
-//
-//						return true;
-//					}
-//
-//				return false;
-//			}
-//		});
 	}
 }
