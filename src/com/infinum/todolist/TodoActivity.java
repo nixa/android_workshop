@@ -1,17 +1,22 @@
 package com.infinum.todolist;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnKeyListener;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -19,6 +24,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
@@ -28,73 +34,55 @@ public class TodoActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);	
+		setContentView(R.layout.main);
 
-		final EditText myEditText = (EditText) findViewById(R.id.editText1);
-		ListView listView = (ListView) findViewById(R.id.listView1);
+		ListView articlesList = (ListView) findViewById(R.id.listView1);
+		ArrayList<Article> articles = Article.getArticles();
+		ArticlesAdapter articleAdapter = new ArticlesAdapter(this,
+				android.R.layout.simple_list_item_1, articles);
+		articlesList.setAdapter(articleAdapter);
+		articleAdapter.notifyDataSetChanged();
 
-		final ArrayList<String> todoItems = new ArrayList<String>();
-		final ArrayAdapter<String> todoItemsAdapter = new ArrayAdapter<String>(
-				this, android.R.layout.simple_list_item_1, todoItems);
-		listView.setAdapter(todoItemsAdapter);
-
-		myEditText.setOnEditorActionListener(new OnEditorActionListener() {
-
-			public boolean onEditorAction(TextView v, int actionId,
-					KeyEvent event) {
-
-				if (actionId == EditorInfo.IME_ACTION_DONE) {
-					todoItems.add(myEditText.getText().toString());
-					todoItemsAdapter.notifyDataSetChanged();
-
-					myEditText.setText("");
-
-					return true;
-				}
-
-				return false;
-			}
-		});
-		
-		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
-
-			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-					final int arg2, long arg3) {
-
-				String text = (String) arg0.getItemAtPosition(arg2);
-				
-				AlertDialog.Builder dialogBuilder = new Builder(TodoActivity.this);
-				dialogBuilder.setCancelable(true);
-				dialogBuilder.setMessage(String.format("Jeste li sigurni da želite obrisati '%s'?", text));
-				dialogBuilder.setTitle("Obriši Todo stavku");
-				dialogBuilder.setPositiveButton("DA", new OnClickListener() {
-					
-					public void onClick(DialogInterface dialog, int which) {
-						todoItems.remove(arg2);
-						todoItemsAdapter.notifyDataSetChanged();
-					}
-				});
-				dialogBuilder.setNegativeButton("NE", new OnClickListener() {
-					
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.cancel();
-					}
-				});				
-				dialogBuilder.create().show();
-
-				return true;
-			}
-			
-		});
-		
-		listView.setOnItemClickListener(new OnItemClickListener() {
+		articlesList.setOnItemClickListener(new OnItemClickListener() {
 
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				Intent intent = new Intent(TodoActivity.this, DetailsActivity.class);
-				intent.putExtra("selected_text", todoItems.get(arg2));
-				startActivity(intent);		
+
+				Intent intent = new Intent(TodoActivity.this,
+						DetailsActivity.class);
+				Article article = (Article) arg0.getItemAtPosition(arg2);
+				intent.putExtra("url", article.getUrl());
+				startActivity(intent);
 			}
 		});
+	}
+
+	private class ArticlesAdapter extends ArrayAdapter<Article> {
+		int resourceId;
+
+		public ArticlesAdapter(Context context, int textViewResourceId,
+				List<Article> objects) {
+			super(context, textViewResourceId, objects);
+			resourceId = textViewResourceId;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			View v = convertView;
+
+			if (v == null) {
+				LayoutInflater vi = (LayoutInflater) getContext()
+						.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				v = vi.inflate(resourceId, parent, false);
+			}
+
+			Log.d("nixa", getItem(position).getTitle());
+
+			TextView title = (TextView) v.findViewById(android.R.id.text1);
+			title.setText(getItem(position).getTitle());
+
+			return v;
+		}
+
 	}
 }

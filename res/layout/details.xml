@@ -5,9 +5,5 @@
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:gravity="top">
-    <EditText
-        android:id="@+id/editText1"
-        android:layout_alignParentBottom="true"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true" android:layout_width="match_parent"></EditText>
+    <ImageView android:src="@drawable/icon" android:id="@+id/imageView1" android:layout_alignParentBottom="true" android:layout_height="match_parent" android:layout_width="match_parent"></ImageView>
 </RelativeLayout>
