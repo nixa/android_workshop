@@ -18,6 +18,7 @@ import android.util.Log;
 public class Article {
 	private static String AUTHOR_FIELD = "author";
 	private static String TITLE_FIELD = "title";
+	private static String URL_FIELD = "url";
 
 	private String author = null;
 	private String title = null;
@@ -27,7 +28,7 @@ public class Article {
 		try {
 			author = json.getString(AUTHOR_FIELD);
 			title = json.getString(TITLE_FIELD);
-			url = json.getJSONArray("media").getJSONObject(0).getString("url");
+			url = json.getJSONArray("media").getJSONObject(0).getString(URL_FIELD);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

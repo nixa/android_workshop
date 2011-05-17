@@ -29,7 +29,7 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
-public class TodoActivity extends Activity {
+public class NewsActivity extends Activity {
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -48,7 +48,7 @@ public class TodoActivity extends Activity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 
-				Intent intent = new Intent(TodoActivity.this,
+				Intent intent = new Intent(NewsActivity.this,
 						DetailsActivity.class);
 				Article article = (Article) arg0.getItemAtPosition(arg2);
 				intent.putExtra("url", article.getUrl());
