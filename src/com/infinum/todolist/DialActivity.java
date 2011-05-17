@@ -19,7 +19,7 @@ public class DialActivity extends Activity {
 		dialButton.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {
-				Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:0959115614"));
+				Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:0959115614"));
 				startActivity(intent);
 			}
 		});
