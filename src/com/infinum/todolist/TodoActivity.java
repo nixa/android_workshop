@@ -28,7 +28,7 @@ public class TodoActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+		setContentView(R.layout.main);	
 
 		final EditText myEditText = (EditText) findViewById(R.id.editText1);
 		ListView listView = (ListView) findViewById(R.id.listView1);
